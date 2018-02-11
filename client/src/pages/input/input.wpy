@@ -1,0 +1,116 @@
+<template>
+  <view class="input-panel">
+    <view class="card input" wx:if="{{!showCardPanel}}">
+      <input class="input-num" maxlength="3" type="text" @confirm="hideNumber" auto-focus confirm-type="done"></input>
+      <text class="tips">注： 自定义 story point</text>
+    </view>
+
+    <view class="card-panel" wx:if="{{showCardPanel}}">
+      <view wx:if="{{reverseCard}}" class="card reverse" @tap="showCardNumber">
+        <image class="card-bg" src="../../assets/img/card-bg.jpg" />
+        <text class="words">{{showWord}}</text>
+        <text class="tips">点击翻牌</text>
+      </view>
+      <view wx:if="{{!reverseCard}}" class="card front flipInY" @tap="hideCard" style="background-color:{{showColor}}">
+        <!-- String -->
+        <view wx:if="{{!valueType}}">
+          <text class="{{showNum.length <= 2 ? 'number short' : 'light-shadow number long'}}">{{showNum}}</text>
+        </view>
+        <view wx:if="{{valueType}}">
+          <text class="{{showNum.length <= 2 ? 'string short' : 'light-shadow string long'}}">{{showNum}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {randomNumber} from '../../mixins/utils'
+
+  var colorArray = [
+    '#b5cc18',
+    '#00b5ad',
+    '#21ba45',
+    '#2185d0',
+    '#6435c9',
+    '#fbbd08',
+    '#a5673f',
+    '#767676',
+    '#f2711c',
+    '#a333c8'
+  ]
+
+  export default class Input extends wepy.page {
+    data = {
+      showNum: 1,
+      showCardPanel: false,
+      // 默认显示卡片背面
+      reverseCard: true,
+      showColor: '#767676',
+      showWord: ''
+    }
+    computed = {
+      valueType() {
+        var zhReg = /[\u4E00-\u9FA5]+/g
+        if (zhReg.test(this.showNum)) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+    methods = {
+      hideNumber(e) {
+        if (!e.detail.value) return
+        this.showCardPanel = true
+        this.showNum = e.detail.value
+        this.reverseCard = true
+        this.showColor = colorArray[randomNumber(0, 10)]
+        this.showWord = this.$parent.globalData.words[randomNumber(0, 53)]
+      },
+      showCardNumber() {
+        this.reverseCard = false
+      },
+      hideCard() {
+        this.showCardPanel = false
+      }
+    }
+  }
+</script>
+<style lang="scss">
+  @import '../../assets/css/mixins.scss';
+
+  .input-panel .card {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 48rpx;
+    height: 1000rpx;
+    width: 640rpx;
+    border-radius: 16rpx;
+    background-color: #ccc;
+    text-align: center;
+  }
+
+  .input-panel .input-num {
+    position: relative;
+    top: 200rpx;
+    width: 640rpx;
+    height: 300rpx;
+    font-size: 300rpx;
+    color: #fff;
+  }
+
+  .input-panel .tips {
+    position: absolute;
+    left: 50%;
+    bottom: 20rpx;
+    font-size: 24rpx;
+    color: #fff;
+    transform: translateX(-50%);
+  }
+
+
+
+</style>

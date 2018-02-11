@@ -1,0 +1,122 @@
+.card-panel {
+  height: 100vh;
+  width: 100vw;
+  .card {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 48rpx;
+    height: 1000rpx;
+    width: 640rpx;
+    border-radius: 16rpx;
+    background-color: #fff;
+    text-align: center;
+    &.reverse {
+      .words {
+        position: absolute;
+        top: 20rpx;
+        left: 50%;
+        font-size: 40rpx;
+        color: #fff;
+        transform: translateX(-50%);
+      }
+      .tips {
+        position: absolute;
+        left: 50%;
+        bottom: 20rpx;
+        font-size: 24rpx;
+        color: #fff;
+        transform: translateX(-50%);
+      }
+      .words {
+        position: absolute;
+        left: 50%;
+        bottom: 20rpx;
+        font-size:40rpx;
+        color:#fff;
+        transform:translate(-50%, -50%);
+        width:500rpx;
+        text-align: left;
+        top:50%;
+      }
+    }
+    .number {
+      display: inline-block;
+      font-size: 450rpx;
+      text-shadow: 20rpx 20rpx #000;
+      height: 1000rpx;
+      color: #fff;
+      line-height: 1000rpx;
+      vertical-align: middle;
+
+      &.no-shadow {
+        text-shadow: none;
+        font-size: 400rpx;
+      }
+      &.light-shadow {
+        text-shadow: 10rpx 10rpx #000;
+        font-size: 450rpx;
+      }
+      &.short {
+        font-size: 450rpx;
+      }
+      &.long {
+        font-size: 340rpx;
+      }
+    }
+    .string {
+      display: inline-block;
+      font-size: 260rpx;
+      text-shadow: 20rpx 20rpx #000;
+      height: 1000rpx;
+      color: #fff;
+      line-height: 1000rpx;
+      vertical-align: middle;
+      &.light-shadow {
+        text-shadow: 10rpx 10rpx #000;
+      }
+      &.short {
+        font-size: 260rpx;
+      }
+      &.long {
+        font-size: 170rpx;
+      }
+    }
+  }
+
+  .card-bg {
+    background-color: #767676;
+    background-size: cover;
+    height: 1000rpx;
+    width: 640rpx;
+    border-radius: 16rpx;
+  }
+}
+
+@keyframes flipInY {
+  from {
+    transform: perspective(400rpx) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+  40% {
+    transform: perspective(400rpx) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+  60% {
+    transform: perspective(400rpx) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: perspective(400rpx) rotate3d(0, 1, 0, -5deg);
+  }
+  to {
+    transform: perspective(400rpx);
+  }
+}
+
+.flipInY {
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  animation: flipInY 1s ease-in;
+}

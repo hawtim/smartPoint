@@ -1,0 +1,128 @@
+<template>
+  <view class="container">
+    <view class="story-point" wx:if="{{!showCardPanel}}">
+      <text class="point num-1" @tap="showCard" data-num="1" data-color="#b5cc18">1</text>
+      <text class="point num-2" @tap="showCard" data-num="2" data-color="#00b5ad">2</text>
+      <text class="point num-3" @tap="showCard" data-num="3" data-color="#21ba45">3</text>
+      <text class="point num-5" @tap="showCard" data-num="5" data-color="#2185d0">5</text>
+      <text class="point num-8" @tap="showCard" data-num="8" data-color="#6435c9">8</text>
+      <text class="point num-13" @tap="showCard" data-num="13" data-color="#fbbd08">13</text>
+      <text class="point num-21" @tap="showCard" data-num="21" data-color="#a5673f">21</text>
+      <text class="point num-0-5" @tap="showCard" data-num="0.5" data-color="#767676">0.5</text>
+    </view>
+    <view class="card-panel" wx:if="{{showCardPanel}}">
+      <view wx:if="{{reverseCard}}" class="card reverse" bindtap="showCardNumber">
+        <image class="card-bg" src="../../assets/img/card-bg.jpg" />
+        <text class="words">{{showWord}}</text>
+        <text class="tips">点击翻牌</text>
+      </view>
+      <view wx:if="{{!reverseCard}}" class="card front flipInY" bindtap="hideCard" style="background-color:{{showColor}}">
+        <text class="number">{{showNum}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {randomNumber} from '../../mixins/utils'
+
+  export default class Index extends wepy.page {
+    data = {
+      showNum: 1,
+      showCardPanel: false,
+      // 默认显示卡片背面
+      reverseCard: true,
+      showColor: '#fff',
+      showWord: ''
+    }
+    methods = {
+      showCard(e) {
+        this.showCardPanel = true
+        this.showNum = e.target && e.target.dataset.num
+        this.showColor = e.target && e.target.dataset.color
+        this.showWord = this.$parent.globalData.words[randomNumber(0, 53)]
+      },
+      hideCard() {
+        this.showCardPanel = false
+        this.showNum = 1
+        this.reverseCard = true
+        this.showColor = '#fff'
+      },
+      showCardNumber() {
+        this.reverseCard = false
+      }
+    }
+  }
+</script>
+<style lang="scss">
+  @import "../../assets/css/mixins.scss";
+
+  .userinfo-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    font-size: 32rpx;
+    color: #007aff;
+  }
+
+  .container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .story-point {
+    margin: 20rpx;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .story-point .point {
+    font-size: 100rpx;
+    color: #fff;
+    width: 210rpx;
+    height: 300rpx;
+    line-height: 300rpx;
+    border-radius: 10rpx;
+    text-align: center;
+    margin: 25rpx 12rpx;
+    cursor: pointer;
+    box-shadow: 4rpx 4rpx 2rpx 2rpx rgba(0, 0, 0, 0.2);
+  }
+
+  .num-1 {
+    background-color: #b5cc18;
+  }
+
+  .num-2 {
+    background-color: #00b5ad;
+  }
+
+  .num-3 {
+    background-color: #21ba45;
+  }
+
+  .num-5 {
+    background-color: #2185d0;
+  }
+
+  .num-8 {
+    background-color: #6435c9;
+  }
+
+  .num-13 {
+    background-color: #fbbd08;
+  }
+
+  .num-21 {
+    background-color: #a5673f;
+  }
+
+  .num-0-5 {
+    background-color: #767676;
+  }
+
+</style>
